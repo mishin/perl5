@@ -162,7 +162,7 @@ sub Complete {
                 };
 
                 # printable char
-                ord >= 32 && do {
+                ord >= ord(" ") && do {
                     $return .= $_;
                     $r++;
                     print;
