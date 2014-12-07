@@ -229,6 +229,7 @@ prdatum(FILE *stream, datum d)
 
 	while (n--) {
 		c = *p++ & 0377;
+#ifndef EBCDIC
 		if (c & 0200) {
 			fprintf(stream, "M-");
 			c &= 0177;
@@ -237,6 +238,17 @@ prdatum(FILE *stream, datum d)
 			fprintf(stream, "^%c", (c == 0177) ? '?' : c + '@');
 		else
 			putc(c, stream);
+#else   /* is EBCDIC system:  Meta notation doesn't make sense */
+                if (c <= 0x1F || c == QUESTION_MARK_CTRL) {
+                    fprintf(stream, "^%c", toCTRL(c));
+                }
+                else if (! isASCII(c) || c <= 0x3F) {
+                    fprintf(stream, "\\x{%02x}", c);
+		}
+		else { /* must be an ASCII printable */
+                    putc(c, stream);
+                }
+#endif
 	}
 }
 
