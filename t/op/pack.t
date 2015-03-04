@@ -4,6 +4,7 @@ BEGIN {
     chdir 't' if -d 't';
     require './test.pl'; require './charset_tools.pl';
     set_up_inc(qw '../lib ../dist/Math-BigInt/lib');
+    skip_all("Very temporary");
 }
 
 # This is truth in an if statement, and could be a skip message
