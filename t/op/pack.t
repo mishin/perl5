@@ -1124,7 +1124,19 @@ SKIP: {
         skip "cannot pack '$t' on this perl", 5 if is_valid_error($@);
         my $p2 = eval { pack $c, @d };
         is($@, '');
-        is($p1, $p2);
+        {
+            use Config;
+            local $::TODO = 'This version of gcc fails with -Duselongdouble'
+                if ($tle eq 'D<cCD<' || $tle eq 'f<F<d<')
+                    && defined $Config{ccname}
+                    && $Config{ccname} eq 'gcc'
+                    && defined $Config{gccversion}
+                    && $Config{gccversion} eq '4.9.1'
+                    && defined $Config{uselongdouble}
+                    && $Config{uselongdouble} eq 'define';
+            #diag __LINE__ . ": " . $tle unless
+            is($p1, $p2);
+        }
         s!(/[aAZ])\*!$1!g for $t, $c;
         my @u1 = eval { unpack $t, $p1 };
         is($@, '');
