@@ -74,7 +74,7 @@ sub _vms_efs {
 
 
 # If loading the XS stuff doesn't work, we can fall back to pure perl
-if(! defined &getcwd && defined &DynaLoader::boot_DynaLoader) {
+if(0 && ! defined &getcwd && defined &DynaLoader::boot_DynaLoader) {
   eval {#eval is questionable since we are handling potential errors like
         #"Cwd object version 3.48 does not match bootstrap parameter 3.50
         #at lib/DynaLoader.pm line 216." by having this eval
@@ -402,6 +402,7 @@ sub _perl_abs_path
     my $start = @_ ? shift : '.';
     my($dotdots, $cwd, @pst, @cst, $dir, @tst);
 
+    print STDERR "# Using Perl abs_path\n";
     unless (@cst = stat( $start ))
     {
 	_carp("stat($start): $!");
@@ -687,8 +688,8 @@ if (exists $METHOD_MAP{$^O}) {
 }
 
 # In case the XS version doesn't load.
-*abs_path = \&_perl_abs_path unless defined &abs_path;
-*getcwd = \&_perl_getcwd unless defined &getcwd;
+*abs_path = \&_perl_abs_path; # unless defined &abs_path;
+*getcwd = \&_perl_getcwd; # unless defined &getcwd;
 
 # added function alias for those of us more
 # used to the libc function.  --tchrist 27-Jan-00
