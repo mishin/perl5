@@ -1413,40 +1413,24 @@ EOT
   }
 }
 
-#XXX}
+#XXX dollar sign doesn't make sense, I'm changing from pound sterling to B6,
+# which is the same everywhere so far  XXX outdent  
 {
-    if ($Is_ebcdic) {
-	$b = "Bad. XS didn't escape dollar sign";
-############# 322
-	$WANT = <<"EOT"; # Careful. This is '' string written inside "" here doc
-#\$VAR1 = '\$b\"\@\\\\\xB1';
-EOT
-        $a = "\$b\"\@\\\xB1\x{100}";
-	chop $a;
-	TEST q(Data::Dumper->Dump([$a])), "utf8 flag with \" and \$";
-	if ($XS) {
-	    $WANT = <<'EOT'; # While this is "" string written inside "" here doc
-#$VAR1 = "\$b\"\@\\\x{b1}";
-EOT
-            TEST q(Data::Dumper->Dumpxs([$a])), "XS utf8 flag with \" and \$";
-	}
-    } else {
 	$b = "Bad. XS didn't escape dollar sign";
 #############
 	$WANT = <<"EOT"; # Careful. This is '' string written inside "" here doc
-#\$VAR1 = '\$b\"\@\\\\\xA3';
+#\$VAR1 = '\$b\"\@\\\\\xB6';
 EOT
 
-        $a = "\$b\"\@\\\xA3\x{100}";
+        $a = "\$b\"\@\\\xB6\x{100}";
 	chop $a;
 	TEST q(Data::Dumper->Dump([$a])), "utf8 flag with \" and \$";
 	if ($XS) {
 	    $WANT = <<'EOT'; # While this is "" string written inside "" here doc
-#$VAR1 = "\$b\"\@\\\x{a3}";
+#$VAR1 = "\$b\"\@\\\x{b6}";
 EOT
             TEST q(Data::Dumper->Dumpxs([$a])), "XS utf8 flag with \" and \$";
 	}
-  }
   # XS used to produce "$b\"' which is 4 chars, not 3. [ie wrongly qq(\$b\\\")]
 #############
   $WANT = <<'EOT';
