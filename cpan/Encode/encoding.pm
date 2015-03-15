@@ -8,6 +8,13 @@ use warnings;
 
 use constant DEBUG => !!$ENV{PERL_ENCODE_DEBUG};
 
+BEGIN {
+    if ( ord("A") == 193 ) {
+        require Carp;
+        Carp::croak("encoding: pragma does not support EBCDIC platforms");
+    }
+}
+
 our $HAS_PERLIO = 0;
 eval { require PerlIO::encoding };
 unless ($@) {
@@ -95,11 +102,6 @@ sub _get_locale_encoding {
 }
 
 sub import {
-    if ( ord("A") == 193 ) {
-        require Carp;
-        Carp::croak("encoding: pragma does not support EBCDIC platforms");
-    }
-
     if ($] >= 5.017) {
 	warnings::warnif("deprecated",
 			 "Use of the encoding pragma is deprecated")
