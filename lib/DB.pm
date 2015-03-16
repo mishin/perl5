@@ -244,7 +244,7 @@ sub backtrace {
     for (@a) {
       s/'/\\'/g;
       s/([^\0]*)/'$1'/ unless /^-?[\d.]+$/;
-      require './meta_notation.pm';
+      require 'meta_notation.pm';
       $_ = _meta_notation($_) if /[[:^print:]]/a;
     }
     $w = $w ? '@ = ' : '$ = ';
