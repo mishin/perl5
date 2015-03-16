@@ -402,7 +402,7 @@ sub _perl_abs_path
     my $start = @_ ? shift : '.';
     my($dotdots, $cwd, @pst, @cst, $dir, @tst);
 
-    print STDERR "# Using Perl abs_path\n";
+    #print STDERR "# Using Perl abs_path\n";
     unless (@cst = stat( $start ))
     {
 	_carp("stat($start): $!");
