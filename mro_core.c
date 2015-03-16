@@ -1,4 +1,4 @@
-/*    mro.c
+/*    mro_core.c
  *
  *    Copyright (c) 2007 Brandon L Black
  *    Copyright (c) 2007, 2008, 2009, 2010, 2011 Larry Wall and others
