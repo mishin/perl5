@@ -11231,7 +11231,6 @@ S_grok_bslash_N(pTHX_ RExC_state_t *pRExC_state,
 	/* The tokenizer should have guaranteed validity, but it's possible to
          * bypass it by using single quoting, so check.  Don't do the check
          * here when there are multiple chars; we do it below anyway. */
-        // outdent if (! has_multiple_chars) {
             if (length_of_hex == 0
                 || length_of_hex != (STRLEN)(endchar - RExC_parse) )
             {
